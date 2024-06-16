@@ -15,7 +15,7 @@ public:
     ~memDirecta();
 
     void start();
-    void acierto(int index, int etiqueta, int palabra);
+    bool acierto(int index, int etiqueta, int palabra);
 };
 
 memDirecta::memDirecta(int tam, int palabras)
@@ -39,7 +39,7 @@ void memDirecta::start(){
         int etiqueta,indice,palabra;
         spliceData(entrada,etiqueta,indice,palabra);
         updateTable(entrada,etiqueta,indice,palabra);
-        acierto(indice,etiqueta,palabra);
+        curAcierto = acierto(indice,etiqueta,palabra);
     };
 
 }
@@ -52,11 +52,12 @@ void memDirecta::acierto(int index, int etiqueta, int palabra){
         listaCache[index].setPalabra(palabra);
         listaCache[index].setAcierto(false);
         HM += "M, ";
-        return;
+        return false;
     }
     listaCache[index].setAcierto(true);
     listaCache[index].setPalabra(palabra);
      HM += "H, ";
+     return true;
     
 }
 

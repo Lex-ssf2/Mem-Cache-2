@@ -50,7 +50,7 @@ int main(int argc, const char* argv[])
         if(curAddr == ','){
             continue;
         }
-        memoria.readOne(curAddr);
+        memoria.readOne((int)curAddr);
     }
     double aciertos, total;
     aciertos = memoria.getTotalAciertos();

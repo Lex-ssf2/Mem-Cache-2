@@ -15,7 +15,7 @@ public:
     ~memFullAsoc();
 
     void start();
-    void acierto(int index);
+    bool acierto(int index);
     void updateTable(int entrada);
 };
 
@@ -44,7 +44,7 @@ void memFullAsoc::start(){
             listaCache.resize(convertBinary(entrada).size() + 1);
         }
         updateTable(entrada);
-        acierto(entrada);
+        curAcierto = acierto(entrada);
     };
 }
 
@@ -55,10 +55,11 @@ void memFullAsoc::acierto(int index){
         listaCache[index].setEtiqueta(index);
         listaCache[index].setAcierto(false);
         HM += "M, ";
-        return;
+        return false;
     }
     listaCache[index].setAcierto(true);
     HM += "H, ";
+    return true;
     
 }
 

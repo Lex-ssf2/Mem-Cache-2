@@ -17,7 +17,7 @@ public:
 
     int getLRUindex(int index);
     void start();
-    void acierto(int index, int etiqueta, int palabra);
+    bool acierto(int index, int etiqueta, int palabra);
     void readOne(int entrada);
 };
 
@@ -42,7 +42,7 @@ void memVias::start(){
         int etiqueta,indice,palabra;
         spliceData(entrada,etiqueta,indice,palabra);
         updateTable(entrada,etiqueta,indice,palabra);
-        acierto(indice,etiqueta,palabra);
+        curAcierto = acierto(indice,etiqueta,palabra);
     };
 }
 
@@ -51,10 +51,10 @@ void memVias::readOne(int entrada){
     ++totalDirecciones;
     spliceData(entrada,etiqueta,indice,palabra);
     //updateTable(entrada,etiqueta,indice,palabra);
-    acierto(indice,etiqueta,palabra);
+    curAcierto = acierto(indice,etiqueta,palabra);
 }
 
-void memVias::acierto(int index, int etiqueta, int palabra){
+bool memVias::acierto(int index, int etiqueta, int palabra){
 
     bool encontrado = false;
     int contador = listaCacheVias[index][this->viasMax].getCont() + 1;
@@ -68,7 +68,7 @@ void memVias::acierto(int index, int etiqueta, int palabra){
             listaCacheVias[index][i].setAcierto(true);
             HM += "H, ";
             ++totalAcierto;
-            return;
+            return true;
         }
     }
 
@@ -78,6 +78,7 @@ void memVias::acierto(int index, int etiqueta, int palabra){
     listaCacheVias[index][tmpIndex].setPalabra(palabra);
     listaCacheVias[index][tmpIndex].setCont(contador);
     HM += "M, ";
+    return false;
     
 }
 

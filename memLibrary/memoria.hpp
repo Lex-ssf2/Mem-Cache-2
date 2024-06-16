@@ -14,6 +14,7 @@ protected:
 
     string BinAdrss,Etiqueta,Indice,HM,Word,type;
     int cantPalabras, tamanoBloque, viasMax,offsetPalabra,offsetBit,totalAcierto,totalDirecciones;
+    bool curAcierto;
 
 public:
     Memoria();
@@ -23,7 +24,7 @@ public:
     void imprimir();
     void restartText();
     void start();
-    void acierto(int index);
+    bool acierto(int index);
     string convertBinary(unsigned int num);
     void updateTable(int entrada, int etiqueta, int indice, int palabra);
     void spliceData(int entrada,int &etiqueta, int &indice, int &palabra);
@@ -46,6 +47,7 @@ void Memoria::init(int tam, int palabras, int vias)
     offsetBit = log2(tamanoBloque);
     totalAcierto = 0;
     totalDirecciones = 0;
+    curAcierto = false;
     this->restartText();
 }
 
@@ -69,8 +71,8 @@ void Memoria::readOne(int entrada){
     return;
 }
 
-void Memoria::acierto(int index){
-    return;
+bool Memoria::acierto(int index){
+    return false;
 }
 
 void Memoria::imprimir(){
@@ -108,5 +110,9 @@ int Memoria::getTotalAciertos(){
 }
 int Memoria::getTotalDirecciones(){
     return totalDirecciones;
+}
+
+bool Memoria::getCurAcierto(){
+    return curAcierto;
 }
 #endif

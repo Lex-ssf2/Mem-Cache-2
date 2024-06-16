@@ -19,11 +19,13 @@ int main(int argc, const char* argv[])
     int fd = open("ancona_data.csv", O_RDONLY);
     int direccion;
     int vias, bloques, palabras;
+    char manualAddress;
+    double aciertos, total;
+    bool fetchBoolean = false;
     vias = 2;
-    bloques = 8;
+    bloques = 4;
     palabras = 2;
-    memVias memoria(bloques,palabras,vias);
-
+    memVias memoria(bloques,palabras,vias), memoriaNM(bloques,palabras,vias);
     if(fd == -1){
         cout << "Archivo no encontrado";
         return -1;
@@ -56,12 +58,42 @@ int main(int argc, const char* argv[])
             memoria.prefetch((int)(curAddr + 1));
         }
     }
-    double aciertos, total;
     aciertos = memoria.getTotalAciertos();
     total = memoria.getTotalDirecciones();
-    cout << "Cantidad de bloques: "  << bloques << "\nTotal de palabras: " << palabras << "\nTotal de vias: " << vias;
+    cout << "Con MMAP:\nCantidad de bloques: "  << bloques << "\nTotal de palabras: " << palabras << "\nTotal de vias: " << vias;
     cout << "\nTotal de aciertos: " << aciertos << " Total de direcciones: " << total;
-    cout << "\nEl porcentaje de aciertos es de: " << float(aciertos/total)*100 << "%";
+    cout << "\nEl porcentaje de aciertos es de: " << float(aciertos/total)*100 << "%\n\n";
     close(fd);
+    ifstream entrada("ancona_data.csv");
+    if(!entrada.is_open())
+    {
+        cout << "No se encuentra el archivo ancona_data.csv";
+        return -1;
+    };
+    if(entrada.good() && entrada.is_open()){
+        while(!entrada.eof()){
+            if(!fetchBoolean){
+                entrada.get(manualAddress);
+            }
+            fetchBoolean = false;
+            if(manualAddress != ','){
+                memoriaNM.readOne((int)manualAddress);
+                if(!memoriaNM.getCurAcierto())
+                {
+                    entrada.get(manualAddress);
+                    memoriaNM.prefetch((int)(manualAddress));
+                    if(!fetchBoolean)
+                        fetchBoolean = true;
+                }
+            }
+        }
+    }
+    entrada.close();
+    aciertos = memoriaNM.getTotalAciertos();
+    total = memoriaNM.getTotalDirecciones();
+    cout << "Con entrada estandar:\nCantidad de bloques: "  << bloques << "\nTotal de palabras: " << palabras << "\nTotal de vias: " << vias;
+    cout << "\nTotal de aciertos: " << aciertos << " Total de direcciones: " << total;
+    cout << "\nEl porcentaje de aciertos es de: " << float(aciertos/total)*100 << "%\n";
+
     return 0;
 }

@@ -81,16 +81,16 @@ int main(int argc, const char* argv[])
                 if(!memoriaNM.getCurAcierto())
                 {
                     entrada.get(manualAddress);
+                    while(manualAddress == ','){
+                        entrada.get(manualAddress);
+                    }
                     memoriaNM.prefetch((int)(manualAddress));
-                    if(!fetchBoolean)
-                        fetchBoolean = true;
+                    fetchBoolean = true;
                 }
             }
         }
     }
     entrada.close();
-    aciertos = memoriaNM.getTotalAciertos();
-    total = memoriaNM.getTotalDirecciones();
     cout << "Con entrada estandar:\nCantidad de bloques: "  << bloques << "\nTotal de palabras: " << palabras << "\nTotal de vias: " << vias;
     cout << "\nTotal de aciertos: " << aciertos << " Total de direcciones: " << total;
     cout << "\nEl porcentaje de aciertos es de: " << float(aciertos/total)*100 << "%\n";

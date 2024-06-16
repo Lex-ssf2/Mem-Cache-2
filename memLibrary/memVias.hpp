@@ -50,7 +50,7 @@ void memVias::readOne(int entrada){
     int etiqueta,indice,palabra;
     ++totalDirecciones;
     spliceData(entrada,etiqueta,indice,palabra);
-    updateTable(entrada,etiqueta,indice,palabra);
+    //updateTable(entrada,etiqueta,indice,palabra);
     acierto(indice,etiqueta,palabra);
 }
 

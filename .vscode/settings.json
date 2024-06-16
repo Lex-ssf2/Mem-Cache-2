@@ -7,6 +7,9 @@
         "fstream": "cpp",
         "xiosbase": "cpp",
         "iostream": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "xlocmes": "cpp",
+        "format": "cpp",
+        "xutility": "cpp"
     }
 }

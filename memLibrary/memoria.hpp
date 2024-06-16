@@ -13,7 +13,7 @@ class Memoria
 protected:
 
     string BinAdrss,Etiqueta,Indice,HM,Word,type;
-    int cantPalabras, tamanoBloque, viasMax,offsetPalabra,offsetBit;
+    int cantPalabras, tamanoBloque, viasMax,offsetPalabra,offsetBit,totalAcierto,totalDirecciones;
 
 public:
     Memoria();
@@ -27,6 +27,7 @@ public:
     string convertBinary(unsigned int num);
     void updateTable(int entrada, int etiqueta, int indice, int palabra);
     void spliceData(int entrada,int &etiqueta, int &indice, int &palabra);
+    void readOne(int entrada);
 };
 
 Memoria::Memoria()
@@ -40,6 +41,8 @@ void Memoria::init(int tam, int palabras, int vias)
     viasMax = vias;
     offsetPalabra = log2(cantPalabras);
     offsetBit = log2(tamanoBloque);
+    totalAcierto = 0;
+    totalDirecciones = 0;
     this->restartText();
 }
 
@@ -56,6 +59,10 @@ void Memoria::restartText(){
 }
 
 void Memoria::start(){
+    return;
+}
+
+void Memoria::readOne(int entrada){
     return;
 }
 

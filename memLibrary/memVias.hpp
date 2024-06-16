@@ -18,6 +18,7 @@ public:
     int getLRUindex(int index);
     void start();
     void acierto(int index, int etiqueta, int palabra);
+    void readOne(int entrada);
 };
 
 memVias::memVias(int tam, int palabras,int vias)
@@ -26,7 +27,6 @@ memVias::memVias(int tam, int palabras,int vias)
     init(tam,palabras,vias);
     cout << viasMax << "\n";
     listaCacheVias.resize(cantPalabras * tamanoBloque, vector<BloqueCache>(viasMax + 1));
-    start();
 }
 
 memVias::~memVias()
@@ -44,7 +44,14 @@ void memVias::start(){
         updateTable(entrada,etiqueta,indice,palabra);
         acierto(indice,etiqueta,palabra);
     };
+}
 
+void memVias::readOne(int entrada){
+    int etiqueta,indice,palabra;
+    ++totalDirecciones;
+    spliceData(entrada,etiqueta,indice,palabra);
+    updateTable(entrada,etiqueta,indice,palabra);
+    acierto(indice,etiqueta,palabra);
 }
 
 void memVias::acierto(int index, int etiqueta, int palabra){
@@ -60,6 +67,7 @@ void memVias::acierto(int index, int etiqueta, int palabra){
             listaCacheVias[index][i].setCont(contador);
             listaCacheVias[index][i].setAcierto(true);
             HM += "H, ";
+            ++totalAcierto;
             return;
         }
     }

@@ -1,35 +1,35 @@
 #include <iostream>
+#include <sstream>
 
 #include "memLibrary/memDirecta.hpp"
 #include "memLibrary/memVias.hpp"
 #include "memLibrary/memFullAsoc.hpp"
+#include <fstream>
   
 using namespace std;
 
 int main(int argc, const char* argv[])
 {
-    int tipo,tamano,palabras,vias;
-    cin >> tipo;
-    switch (tipo)
+    ifstream entrada("vestiaire.csv");
+    if(!entrada.is_open())
     {
-        case 2:{
-            cin >> tamano >> palabras >> vias;
-            memVias memoria(tamano,palabras,vias);
-            memoria.imprimir();
-            break;
-        }
-        case 3:{
-            cin >> tamano;
-            memFullAsoc memoriaA(tamano);
-            memoriaA.imprimir();
-            break;
-        }
-        default:{
-            cin >> tamano >> palabras;
-            memDirecta memoria(tamano,palabras);
-            memoria.imprimir();
-            break;
-        }
+        cout << "No se encuentra el archivo vestiaire.csv";
+        return -1;
     }
+    string curLine;
+    stringstream actualData;
+    int direccion;
+    memVias memoria(2,2,2);
+
+    if(entrada.good()){
+        getline(entrada,curLine);
+    }
+    while (getline(entrada,curLine))
+    {
+        actualData.str(curLine);
+        actualData >> direccion;
+        memoria.readOne(direccion);
+    }
+    
     return 0;
 }

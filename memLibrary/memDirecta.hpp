@@ -44,7 +44,7 @@ void memDirecta::start(){
 
 }
 
-void memDirecta::acierto(int index, int etiqueta, int palabra){
+bool memDirecta::acierto(int index, int etiqueta, int palabra){
 
     if(listaCache[index].getEtiqueta() != etiqueta)
     {

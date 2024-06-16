@@ -48,7 +48,7 @@ void memFullAsoc::start(){
     };
 }
 
-void memFullAsoc::acierto(int index){
+bool memFullAsoc::acierto(int index){
 
     if(listaCache[index].getEtiqueta() != index)
     {

@@ -51,6 +51,10 @@ int main(int argc, const char* argv[])
             continue;
         }
         memoria.readOne((int)curAddr);
+        if(!memoria.getCurAcierto())
+        {
+            memoria.prefetch((int)(curAddr + 1));
+        }
     }
     double aciertos, total;
     aciertos = memoria.getTotalAciertos();
@@ -59,20 +63,5 @@ int main(int argc, const char* argv[])
     cout << "\nTotal de aciertos: " << aciertos << " Total de direcciones: " << total;
     cout << "\nEl porcentaje de aciertos es de: " << float(aciertos/total)*100 << "%";
     close(fd);
-
-    /*if(entrada.good()){
-        getline(entrada,curLine);
-    }
-    while (getline(entrada,curLine))
-    {
-        for (size_t i = 0; i < 5; i++)
-        {
-            curLine.erase(0,curLine.find(',') + 1);
-        }
-        actualData.str(curLine);
-        actualData >> direccion;
-        memoria.readOne(direccion);
-    }*/
-
     return 0;
 }

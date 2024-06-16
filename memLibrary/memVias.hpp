@@ -17,8 +17,9 @@ public:
 
     int getLRUindex(int index);
     void start();
-    bool acierto(int index, int etiqueta, int palabra);
+    bool acierto(int index, int etiqueta, int palabra, bool prefetch = false);
     void readOne(int entrada);
+    void prefetch(int direccion);
 };
 
 memVias::memVias(int tam, int palabras,int vias)
@@ -54,7 +55,14 @@ void memVias::readOne(int entrada){
     curAcierto = acierto(indice,etiqueta,palabra);
 }
 
-bool memVias::acierto(int index, int etiqueta, int palabra){
+void memVias::prefetch(int direccion)
+{
+    int etiqueta,indice,palabra;
+    spliceData(direccion,etiqueta,indice,palabra);
+    acierto(indice,etiqueta,palabra,false);
+}
+
+bool memVias::acierto(int index, int etiqueta, int palabra,bool prefetch){
 
     bool encontrado = false;
     int contador = listaCacheVias[index][this->viasMax].getCont() + 1;
@@ -66,8 +74,10 @@ bool memVias::acierto(int index, int etiqueta, int palabra){
         if(listaCacheVias[index][i].getEtiqueta() == etiqueta){
             listaCacheVias[index][i].setCont(contador);
             listaCacheVias[index][i].setAcierto(true);
-            HM += "H, ";
-            ++totalAcierto;
+            if(!prefetch){
+                HM += "H, ";
+                ++totalAcierto;
+            }
             return true;
         }
     }

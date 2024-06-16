@@ -29,9 +29,11 @@ public:
     void updateTable(int entrada, int etiqueta, int indice, int palabra);
     void spliceData(int entrada,int &etiqueta, int &indice, int &palabra);
     void readOne(int entrada);
+    void prefetch();
 
     int getTotalAciertos();
     int getTotalDirecciones();
+    bool getCurAcierto();
 };
 
 Memoria::Memoria()
@@ -103,6 +105,10 @@ void Memoria::spliceData(int entrada,int &etiqueta, int &indice, int &palabra){
     etiqueta = entrada >> this->offsetBit + this->offsetPalabra;
     indice =  (entrada >> this->offsetPalabra) % this->tamanoBloque;
     palabra = entrada % this->cantPalabras;
+}
+
+void Memoria::prefetch(){
+    return;
 }
 
 int Memoria::getTotalAciertos(){

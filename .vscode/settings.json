@@ -10,6 +10,7 @@
         "ostream": "cpp",
         "xlocmes": "cpp",
         "format": "cpp",
-        "xutility": "cpp"
+        "xutility": "cpp",
+        "vector": "cpp"
     }
 }

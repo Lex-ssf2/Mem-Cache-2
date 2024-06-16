@@ -28,6 +28,9 @@ public:
     void updateTable(int entrada, int etiqueta, int indice, int palabra);
     void spliceData(int entrada,int &etiqueta, int &indice, int &palabra);
     void readOne(int entrada);
+
+    int getTotalAciertos();
+    int getTotalDirecciones();
 };
 
 Memoria::Memoria()
@@ -98,5 +101,12 @@ void Memoria::spliceData(int entrada,int &etiqueta, int &indice, int &palabra){
     etiqueta = entrada >> this->offsetBit + this->offsetPalabra;
     indice =  (entrada >> this->offsetPalabra) % this->tamanoBloque;
     palabra = entrada % this->cantPalabras;
+}
+
+int Memoria::getTotalAciertos(){
+    return totalAcierto;
+}
+int Memoria::getTotalDirecciones(){
+    return totalDirecciones;
 }
 #endif

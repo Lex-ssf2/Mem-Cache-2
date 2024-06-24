@@ -26,7 +26,6 @@ memVias::memVias(int tam, int palabras,int vias)
 {
     this->type = "Correspondencia por vias:";
     init(tam,palabras,vias);
-    cout << viasMax << "\n";
     listaCacheVias.resize(cantPalabras * tamanoBloque, vector<BloqueCache>(viasMax + 1));
 }
 

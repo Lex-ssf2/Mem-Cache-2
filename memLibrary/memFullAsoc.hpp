@@ -15,8 +15,10 @@ public:
     ~memFullAsoc();
 
     void start();
-    bool acierto(int index);
+    bool acierto(int index, bool prefetch = false);
     void updateTable(int entrada);
+    void readOne(int entrada);
+    void prefetch(int direccion);
 };
 
 memFullAsoc::memFullAsoc(int tam)
@@ -26,7 +28,6 @@ memFullAsoc::memFullAsoc(int tam)
     this->offsetBit = 0;
     this->offsetPalabra = 0;
     listaCache.resize(tamanoBloque, BloqueCache());
-    start();
 }
 
 memFullAsoc::~memFullAsoc()
@@ -48,7 +49,7 @@ void memFullAsoc::start(){
     };
 }
 
-bool memFullAsoc::acierto(int index){
+bool memFullAsoc::acierto(int index,bool prefetch){
 
     if(listaCache[index].getEtiqueta() != index)
     {
@@ -58,9 +59,27 @@ bool memFullAsoc::acierto(int index){
         return false;
     }
     listaCache[index].setAcierto(true);
-    HM += "H, ";
+    if(!prefetch){
+     HM += "H, ";
+     ++totalAcierto;
+    }
     return true;
     
+}
+
+void memFullAsoc::readOne(int entrada){
+    int etiqueta,indice,palabra;
+    ++totalDirecciones;
+    //spliceData(entrada,etiqueta,indice,palabra);
+    //updateTable(entrada,etiqueta,indice,palabra);
+    curAcierto = acierto(entrada);
+}
+
+void memFullAsoc::prefetch(int direccion)
+{
+    int etiqueta,indice,palabra;
+    //spliceData(direccion,etiqueta,indice,palabra);
+    acierto(direccion,false);
 }
 
 void memFullAsoc::updateTable(int entrada){
